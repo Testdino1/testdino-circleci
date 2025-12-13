@@ -1,0 +1,75 @@
+description: >
+  Advanced example demonstrating various upload options with the TestDino orb.
+  Shows different flag combinations for uploading attachments.
+
+usage:
+  version: 2.1
+  orbs:
+    testdino: testdino/testdino@1.0.0
+
+  jobs:
+    upload-with-html:
+      docker:
+        - image: mcr.microsoft.com/playwright:v1.40.0-focal
+      steps:
+        - checkout
+        - run:
+            name: Install dependencies
+            command: npm ci
+        - run:
+            name: Run Playwright tests
+            command: npx playwright test
+        - testdino/upload-report:
+            report_directory: "./playwright-report"
+            token: TESTDINO_TOKEN
+            upload_html: true
+            verbose: true
+        - store_artifacts:
+            path: ./playwright-report
+            destination: playwright-report
+
+    upload-full-bundle:
+      docker:
+        - image: mcr.microsoft.com/playwright:v1.40.0-focal
+      steps:
+        - checkout
+        - run:
+            name: Install dependencies
+            command: npm ci
+        - run:
+            name: Run Playwright tests
+            command: npx playwright test
+        - testdino/upload-report:
+            report_directory: "./playwright-report"
+            token: TESTDINO_TOKEN
+            upload_full_json: true
+            verbose: true
+
+    upload-with-custom-paths:
+      docker:
+        - image: mcr.microsoft.com/playwright:v1.40.0-focal
+      steps:
+        - checkout
+        - run:
+            name: Install dependencies
+            command: npm ci
+        - run:
+            name: Run Playwright tests
+            command: npx playwright test
+        - testdino/upload-report:
+            report_directory: "./test-results"
+            token: TESTDINO_TOKEN
+            upload_images: true
+            upload_videos: true
+            json_report: "./test-results/results.json"
+            html_report: "./test-results/index.html"
+
+  workflows:
+    test-with-testdino:
+      jobs:
+        - upload-with-html:
+            context: testdino-credentials
+        - upload-full-bundle:
+            context: testdino-credentials
+        - upload-with-custom-paths:
+            context: testdino-credentials
