@@ -1,10 +1,12 @@
+---
 version: 2.1
 
 description: |
-  TestDino CircleCI Orb - Simplifies uploading Playwright test reports to TestDino platform.
-  This orb provides commands to cache test metadata, retrieve last failed tests, and upload test reports.
+  TestDino CircleCI Orb - Simplifies uploading Playwright test reports
+  to TestDino platform. This orb provides commands to cache test metadata,
+  retrieve last failed tests, and upload test reports.
   For more information, visit https://docs.testdino.com
 
 display:
-  home_url: "https://testdino.com"
-  source_url: "https://github.com/testdino-inc/testdino-circleci"
+  home_url: "https://testdino.com/"
+  source_url: "https://github.com/testdino-inc/testdino-circleci/"
